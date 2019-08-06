@@ -2,6 +2,9 @@ const request = require('request')
 const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 
+const command = process.argv[2]
+console.log(command)
+
 // const url = 'https://api.darksky.net/forecast/f0daac9578589e2cd4ded22ceff26533/37.8267,-122.4233?units=us'
 
 // request({url: url, json: true}, (error, response) => {
@@ -38,11 +41,28 @@ const forecast = require('./utils/forecast')
 //     }    
 // })
 
+if(command){
+  geocode(command, (error,data) => {
+    if(error){
+      return console.log(error)
+    }
+    console.log('Error', error)
+    console.log('Data', data)
+    forecast(data.longitude, data.latitude, (error, forecaseData) => {
+      if(error){
+        return console.log(error)
+      }
+      // console.log('Error', error)
+      // console.log('Data', data)
+      console.log(data.location)
+      console.log(forecaseData)
+    })
+  })
+}
+else{
+  console.log("Please enter location")
+}
 
-// geocode("Boston", (error,data) => {
-//     console.log('Error', error)
-//     console.log('Data', data)
-// })
 
 // Goal: Create a reusable function for getting the forecast
 //
@@ -53,7 +73,7 @@ const forecast = require('./utils/forecast')
 //    - Coordinate error, pass string for error
 //    - Success, pass forecast string for data (same format as from before)
 
-forecast(-75.7088, 44.1545, (error, data) => {
-    console.log('Error', error)
-    console.log('Data', data)
-  })
+// forecast(-75.7088, 44.1545, (error, data) => {
+//     console.log('Error', error)
+//     console.log('Data', data)
+//   })
