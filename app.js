@@ -42,19 +42,20 @@ console.log(command)
 // })
 
 if(command){
-  geocode(command, (error,data) => {
+  geocode(command, (error,{longitude, latitude, location}) => {
     if(error){
       return console.log(error)
     }
     console.log('Error', error)
-    console.log('Data', data)
-    forecast(data.longitude, data.latitude, (error, forecaseData) => {
+    // console.log('Data', data)
+    // const {longitude, latitude, location} = data
+    forecast(longitude, latitude, (error, forecaseData) => {
       if(error){
         return console.log(error)
       }
       // console.log('Error', error)
       // console.log('Data', data)
-      console.log(data.location)
+      console.log(location)
       console.log(forecaseData)
     })
   })
